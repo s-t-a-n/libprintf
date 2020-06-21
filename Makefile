@@ -78,7 +78,7 @@ CC_FLAGS = -Werror -Wextra -Wall
 LD_FLAGS = -rcs
 
 # debugging and optimization flags
-CC_OPT_FLAGS = -Ofast													\
+CC_OPT_FLAGS = -O3													\
 			   -march=native
 
 ifeq ($(ASAN),1)
