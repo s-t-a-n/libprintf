@@ -16,6 +16,7 @@ NAME = libftprintf.a
 SRC_D = src
 OBJ_D = obj
 INC_D = inc
+LIB_D = lib
 
 # C source and header files
 SRC =	$(SRC_D)/ft_func_router												\
@@ -46,11 +47,11 @@ SRC := $(SRC:%=%.c)
 
 INC =	$(INC_D)/ft_output.h												\
 		$(INC_D)/ft_printf.h												\
-		$(SRC_D)/libft/inc/ft_std.h											\
-		$(SRC_D)/libft/inc/libft.h
+		$(LIB_D)/libft/inc/ft_std.h											\
+		$(LIB_D)/libft/inc/libft.h
 OBJ :=	$(SRC:$(SRC_D)/%.c=$(OBJ_D)/%.o)
 
-LIBFT = $(SRC_D)/libft/libft.a
+LIBFT = $(LIB_D)/libft/libft.a
 
 # outputting
 CC_LOG=./.cc.log
@@ -70,10 +71,11 @@ CAT=cat
 
 # compiler and linker
 CC = clang
-#CC = gcc
+LD = ar
 
 # compile flags
 CC_FLAGS = -Werror -Wextra -Wall
+LD_FLAGS = -rcs
 
 # debugging and optimization flags
 CC_OPT_FLAGS = -Ofast													\
@@ -82,8 +84,7 @@ CC_OPT_FLAGS = -Ofast													\
 ifeq ($(ASAN),1)
 	CC_FLAGS += -fsanitize=address										\
 				-fno-optimize-sibling-calls
-	LD_FLAGS += -fsanitize=address										\
-				 -fno-optimize-sibling-calls
+	LD_FLAGS +=
 	DEBUG = 1
 endif
 
@@ -93,10 +94,10 @@ ifeq ($(DEBUG),1)
 				-fno-omit-frame-pointer									\
 				-fstack-protector-all									\
 				-DDEBUG
-	LD_FLAGS += -g -O0 -DDEBUG
+	LD_FLAGS +=
 else
 	CC_FLAGS += $(CC_OPT_FLAGS)
-	LD_FLAGS += $(CC_OPT_FLAGS)
+	LD_FLAGS +=
 endif
 
 # make commands
@@ -105,7 +106,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_D) $(OBJ) $(INC) $(LIBFT)
 	@$(ECHO) "Linking $(NAME)..."
-	@ar -rcs $(NAME) $(OBJ) 2>$(CC_LOG) || touch $(CC_ERROR)
+	@$(LD) $(LD_FLAGS) $(NAME) $(OBJ) 2>$(CC_LOG) || touch $(CC_ERROR)
 	@if test -e $(CC_ERROR); then											\
 		$(ECHO) "$(ERROR_STRING)\n" && $(CAT) $(CC_LOG);					\
 	elif test -s $(CC_LOG); then											\
@@ -123,7 +124,7 @@ $(OBJ_D):
 
 $(OBJ): $(OBJ_D)/%.o: $(SRC_D)/%.c
 	@$(ECHO) "Compiling $<..."
-	@$(CC) -I$(INC_D) -I$(SRC_D)/libft/inc $(CC_FLAGS) -c $< -o $@ 2>$(CC_LOG) \
+	@$(CC) $(CC_FLAGS) -I$(INC_D) -I$(LIB_D)/libft/inc -c $< -o $@ 2>$(CC_LOG) \
 		|| touch $(CC_ERROR)
 	@if test -e $(CC_ERROR); then											\
 		$(ECHO) "$(ERROR_STRING)\n" && $(CAT) $(CC_LOG);					\
@@ -135,17 +136,17 @@ $(OBJ): $(OBJ_D)/%.o: $(SRC_D)/%.c
 	@$(RM) -f $(CC_LOG) $(CC_ERROR)
 
 $(LIBFT):
-	@make -C $(SRC_D)/libft
+	@make -C $(LIB_D)/libft
 
 clean:
 	@$(RM) $(OBJ)
 	@$(RM) -r $(OBJ_D)
-	@make -C $(SRC_D)/libft clean
+	@make -C $(LIB_D)/libft clean
 
 fclean: clean
 	@$(RM) $(NAME)
 	@$(RM) bonus
-	@make -C $(SRC_D)/libft fclean
+	@make -C $(LIB_D)/libft fclean
 
 bonus: $(NAME)
 	@touch bonus

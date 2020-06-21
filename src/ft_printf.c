@@ -17,13 +17,11 @@ t_conv_specs	*ft_initialize_conv_specs(t_output_buffer *obuffer,
 {
 	t_conv_specs *cvs;
 
-	cvs = malloc(sizeof(t_conv_specs));
+	cvs = ft_calloc(sizeof(t_conv_specs), 1);
 	if (cvs)
 	{
-		cvs->width = 0;
 		cvs->precision = -1;
 		cvs->size = def;
-		cvs->flag_directives = 0;
 		cvs->args = args;
 		cvs->obuffer = obuffer;
 		cvs->fstring = format_string;
