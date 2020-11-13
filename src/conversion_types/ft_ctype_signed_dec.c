@@ -38,16 +38,16 @@ static t_bool	ft_handle_size(t_conv_specs *cvs, char **numstr)
 {
 	if (cvs->size == def
 			&& (**(cvs->fstring) == 'i' || **(cvs->fstring) == 'd'))
-		*numstr = ft_ltoa_base(va_arg(*(cvs->args), int), 10, false);
+		*numstr = ft_ltoa_base(va_arg(*(cvs->args), int), 10, FALSE);
 	else if (cvs->size == h)
 		*numstr = ft_itoa((short int)va_arg(*(cvs->args), int));
 	else if (cvs->size == hh)
 		*numstr = ft_itoa((char)va_arg(*(cvs->args), int));
 	else if (cvs->size == l || **(cvs->fstring) == 'I'
 			|| **(cvs->fstring) == 'D')
-		*numstr = ft_ltoa_base(va_arg(*(cvs->args), long), 10, false);
+		*numstr = ft_ltoa_base(va_arg(*(cvs->args), long), 10, FALSE);
 	else if (cvs->size == ll)
-		*numstr = ft_lltoa_base(va_arg(*(cvs->args), long long), 10, false);
+		*numstr = ft_lltoa_base(va_arg(*(cvs->args), long long), 10, FALSE);
 	else
 		return (err);
 	return (*numstr != NULL);

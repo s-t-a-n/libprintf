@@ -47,7 +47,6 @@ SRC := $(SRC:%=%.c)
 
 INC =	$(INC_D)/ft_output.h												\
 		$(INC_D)/ft_printf.h												\
-		$(LIB_D)/libft/inc/ft_std.h											\
 		$(LIB_D)/libft/inc/libft.h
 OBJ :=	$(SRC:$(SRC_D)/%.c=$(OBJ_D)/%.o)
 

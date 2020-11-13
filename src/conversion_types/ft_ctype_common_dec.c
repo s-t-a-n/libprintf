@@ -25,7 +25,7 @@ void		ft_handle_apostroph_flag_dec(t_output_buffer *obuffer,
 {
 	t_bool	first_digit;
 
-	first_digit = true;
+	first_digit = TRUE;
 	while (*numstr)
 	{
 		if (!first_digit && numstr_len % 3 == 0)
@@ -33,7 +33,7 @@ void		ft_handle_apostroph_flag_dec(t_output_buffer *obuffer,
 		ft_printchar(*numstr, obuffer);
 		numstr++;
 		numstr_len--;
-		first_digit = false;
+		first_digit = FALSE;
 	}
 }
 

@@ -62,7 +62,7 @@ t_bool		ft_print_ptraddr_op(t_conv_specs *cvs)
 	int		numstr_len;
 
 	numstr = ft_ultoa_base((unsigned long)va_arg(*(cvs->args), void *),
-			16, false);
+			16, FALSE);
 	if (!numstr)
 		return (err);
 	numstr_len = ft_strlen(numstr);

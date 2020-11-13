@@ -35,18 +35,18 @@ static void			ft_handle_width(t_conv_specs *cvs, char *numstr,
 static t_bool		ft_handle_size(t_conv_specs *cvs, char **numstr)
 {
 	if (cvs->size == def && **(cvs->fstring) == 'u')
-		*numstr = ft_ultoa_base(va_arg(*(cvs->args), unsigned int), 10, false);
+		*numstr = ft_ultoa_base(va_arg(*(cvs->args), unsigned int), 10, FALSE);
 	else if (cvs->size == h)
 		*numstr = ft_ultoa_base((unsigned short int)va_arg(*(cvs->args),
-					unsigned int), 10, false);
+					unsigned int), 10, FALSE);
 	else if (cvs->size == hh)
 		*numstr = ft_ultoa_base((unsigned char)va_arg(*(cvs->args),
-					unsigned int), 10, false);
+					unsigned int), 10, FALSE);
 	else if (cvs->size == l || **(cvs->fstring) == 'U')
-		*numstr = ft_ultoa_base(va_arg(*(cvs->args), unsigned long), 10, false);
+		*numstr = ft_ultoa_base(va_arg(*(cvs->args), unsigned long), 10, FALSE);
 	else if (cvs->size == ll)
 		*numstr = ft_ulltoa_base(va_arg(*(cvs->args), unsigned long long),
-				10, false);
+				10, FALSE);
 	else
 		return (err);
 	return (*numstr != NULL);
