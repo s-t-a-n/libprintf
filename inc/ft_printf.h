@@ -20,7 +20,6 @@
 # include <limits.h>
 # include <stdlib.h>
 # include "libft.h"
-# include "ft_std.h"
 # include "ft_output.h"
 
 /*
