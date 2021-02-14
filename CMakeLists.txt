@@ -34,7 +34,7 @@ PRIVATE
 )
 target_compile_options(printf PRIVATE
 ${CMAKE_C_FLAGS}
--Wall -Wextra -Werror -std=c89 -pedantic
+-Wall -Wextra -Werror -std=c99 -pedantic
 )
 target_link_libraries(printf PRIVATE
 ft)
