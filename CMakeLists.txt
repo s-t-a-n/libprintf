@@ -17,10 +17,6 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif()
 endif()
 
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/extern/repo/CMakeLists.txt")
-    message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-endif()
-
 add_library(printf STATIC
 src/ft_printf.c
 src/ft_dprintf.c
@@ -60,9 +56,9 @@ PRIVATE
 # Only do these if this is the main project, and not if it is included through add_subdirectory
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	if(BUILD_TESTING)
-		target_compile_options(gnl PRIVATE "-Wall -Wextra -Werror -std=c89 -pedantic -g -fsanitize=address")
+		target_compile_options(printf PRIVATE -Wall -Wextra -Werror -std=c99 -pedantic -g -fsanitize=address)
 	else()
-		target_compile_options(gnl PRIVATE "-Wall -Wextra -Werror -std=c89 -pedantic")
+		target_compile_options(printf PRIVATE -Wall -Wextra -Werror -std=c99 -pedantic)
 	endif()
 endif()
 
