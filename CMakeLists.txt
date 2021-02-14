@@ -1,40 +1,55 @@
-cmake_minimum_required(VERSION 3.11)
-project(printf)
-add_library(printf STATIC
-src/ft_printf.c
-src/conversion_types/ft_ctype_common_dec.c
-src/conversion_types/ft_ctype_hexadecimal_uppercase_x.c
-src/conversion_types/ft_ctype_signed_dec.c
-src/conversion_types/ft_ctype_output_count.c
-src/conversion_types/ft_ctype_string.c
-src/conversion_types/ft_ctype_percentage.c
-src/conversion_types/ft_ctype_octal.c
-src/conversion_types/ft_ctype_common_float.c
-src/conversion_types/ft_ctype_hexadecimal_x.c
-src/conversion_types/ft_ctype_unsigned_dec.c
-src/conversion_types/ft_ctype_pointer.c
-src/conversion_types/ft_ctype_float.c
-src/conversion_types/ft_ctype_scientific_notation_or_full_float.c
-src/conversion_types/ft_ctype_scientific_notation.c
-src/conversion_types/ft_ctype_char.c
-src/output/ft_output2.c
-src/output/ft_output1.c
-src/ft_output2.c
-src/option_handlers/ft_handle_flags2.c
-src/option_handlers/ft_handle_flags1.c
-src/option_handlers/ft_handle_size2.c
-src/option_handlers/ft_handle_size1.c
-src/ft_func_router.c
-)
-target_include_directories(printf
-PUBLIC
-	inc
-PRIVATE
-	lib/libft/inc
-)
-target_compile_options(printf PRIVATE
-${CMAKE_C_FLAGS}
--Wall -Wextra -Werror -std=c99 -pedantic
-)
-target_link_libraries(printf PRIVATE
-ft)
+cmake_minimum_required(VERSION 3.12)
+project(
+	printf
+	VERSION 0.1
+	DESCRIPTION "libprintf / ft_printf: printing strings to string buffers, fd or stdout - 42 project"
+	LANGUAGES C CXX)
+
+# CMakeLists.txt inspired by:
+# https://gitlab.com/CLIUtils/modern-cmake/tree/master/examples/extended-project
+
+# Only do these if this is the main project, and not if it is included through add_subdirectory
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+	# global compilation standards
+	set(CMAKE_C_STANDARD 99)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -Wextra -pedantic")
+	
+	set(CMAKE_CXX_STANDARD 98)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra -pedantic")
+
+	include(CTest)
+
+	if(BUILD_TESTING)
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fsanitize=address")
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
+	endif()
+
+	# Let's nicely support folders in IDEs
+	set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+	# Docs only available if this is the main app
+	find_package(Doxygen)
+	if(Doxygen_FOUND)
+		add_subdirectory(docs)
+	else()
+		message(STATUS "Doxygen not found, not building docs")
+	endif()
+endif()
+
+# FetchContent added in CMake 3.11, downloads during the configure step
+include(FetchContent)
+
+# FetchContent_MakeAvailable was not added until CMake 3.14; use our shim
+if(${CMAKE_VERSION} VERSION_LESS 3.14)
+	include(cmake/add_FetchContent_MakeAvailable.cmake)
+endif()
+
+add_subdirectory(lib)
+add_subdirectory(src)
+
+# Testing only available if this is the main app
+# Emergency override MODERN_CMAKE_BUILD_TESTING provided as well
+if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
+   AND BUILD_TESTING)
+  add_subdirectory(tests)
+endif()

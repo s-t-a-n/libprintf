@@ -21,7 +21,7 @@
 ** output buffer (+ft_output.c)
 */
 # ifndef O_BUF_SIZE
-#  define O_BUF_SIZE 100
+#  define O_BUF_SIZE 1000
 # endif
 
 typedef struct		s_output_buffer
@@ -33,6 +33,7 @@ typedef struct		s_output_buffer
 }					t_output_buffer;
 
 int					ft_finalize_obuffer(t_output_buffer *obuffer);
+int					ft_finalize_obuffer_tostr(t_output_buffer *obuffer, char *buf, size_t buflen);
 t_output_buffer		*ft_initialize_obuffer(int fd);
 
 void				ft_printstr(char *str, size_t len,

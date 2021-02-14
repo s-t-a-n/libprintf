@@ -134,6 +134,15 @@ CMakeUserPresets.json
 
 # End of https://www.toptal.com/developers/gitignore/api/cmake
 
+# Doxygen rules
+CMakeDoxyfile.in
+CMakeDoxygenDefaults.cmake
+Doxyfile.docs
+# End of Doxygen rules
+
+DartConfiguration.tcl
+Makefile
+build
 obj
 *.log
 *.swiftdoc
