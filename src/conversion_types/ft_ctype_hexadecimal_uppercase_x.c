@@ -60,7 +60,7 @@ static t_bool	ft_handle_size(t_conv_specs *cvs, char **numstr)
 	else if (cvs->size == l)
 		*numstr = ft_ultoa_base(va_arg(*(cvs->args), unsigned long), 16, TRUE);
 	else if (cvs->size == ll)
-		*numstr = ft_ulltoa_base(va_arg(*(cvs->args), unsigned long long),
+		*numstr = ft_ulltoa_base(va_arg(*(cvs->args), unsignedlonglong),
 				16, TRUE);
 	else
 		return (err);

@@ -28,6 +28,11 @@
 int					ft_printf(const char *format_string, ...);
 
 /*
+** ft_dprintf.c
+*/
+int					dprintf(int fd, const char *format, ...);
+
+/*
 ** flag directives
 */
 typedef enum		e_flag_dirs
@@ -37,7 +42,7 @@ typedef enum		e_flag_dirs
 	zero = 4,
 	space = 8,
 	hash = 16,
-	apostroph = 32,
+	apostroph = 32
 }					t_flag_dirs;
 
 /*
@@ -53,7 +58,7 @@ typedef enum		e_size
 	j,
 	L,
 	t,
-	z,
+	z
 }					t_size;
 
 /*

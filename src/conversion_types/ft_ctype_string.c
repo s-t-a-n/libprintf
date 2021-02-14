@@ -19,7 +19,7 @@ static void		ft_handle_width(t_conv_specs *cvs, size_t strlen)
 	padder = (cvs->flag_directives & zero
 			&& !(cvs->flag_directives & left_align)) ? '0' : ' ';
 	if ((size_t)cvs->precision < strlen)
-		cvs->width -= (cvs->precision >= 0) ? cvs->precision : strlen;
+		cvs->width -= (cvs->precision >= 0) ? cvs->precision : (int)strlen;
 	else
 		cvs->width -= strlen;
 	while (cvs->width > 0)

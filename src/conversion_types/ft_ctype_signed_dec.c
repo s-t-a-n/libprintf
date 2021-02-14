@@ -47,7 +47,7 @@ static t_bool	ft_handle_size(t_conv_specs *cvs, char **numstr)
 			|| **(cvs->fstring) == 'D')
 		*numstr = ft_ltoa_base(va_arg(*(cvs->args), long), 10, FALSE);
 	else if (cvs->size == ll)
-		*numstr = ft_lltoa_base(va_arg(*(cvs->args), long long), 10, FALSE);
+		*numstr = ft_lltoa_base(va_arg(*(cvs->args), longlong), 10, FALSE);
 	else
 		return (err);
 	return (*numstr != NULL);

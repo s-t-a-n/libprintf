@@ -57,7 +57,7 @@ static t_bool	ft_handle_double(t_conv_specs *cvs, char **numstr, double var)
 	exp = 0;
 	*numstr = ft_dtoa_sc(var, cvs->precision - 1,
 			&exp, **(cvs->fstring) == 'G');
-	if (cvs->precision == -1 ? 6 : cvs->precision > exp && exp >= -4)
+	if ((cvs->precision == -1) ? TRUE : cvs->precision > exp && exp >= -4)
 	{
 		free(*numstr);
 		*numstr = ft_ldtoa(var, cvs->precision - (exp + 1));
