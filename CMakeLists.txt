@@ -17,9 +17,9 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif()
 endif()
 
-#if(NOT EXISTS "${PROJECT_SOURCE_DIR}/extern/repo/CMakeLists.txt")
-#    message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
-#endif()
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/extern/repo/CMakeLists.txt")
+    message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
+endif()
 
 add_library(printf STATIC
 src/ft_printf.c
@@ -49,15 +49,23 @@ src/option_handlers/ft_handle_size2.c
 src/option_handlers/ft_handle_size1.c
 src/ft_func_router.c
 )
+
 target_include_directories(printf
 PUBLIC
 	inc
 PRIVATE
 	lib/libft/inc
 )
-target_compile_options(printf PRIVATE
-${CMAKE_C_FLAGS}
--Wall -Wextra -Werror -std=c99 -pedantic
-)
+
+# Only do these if this is the main project, and not if it is included through add_subdirectory
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+	if(BUILD_TESTING)
+		target_compile_options(gnl PRIVATE "-Wall -Wextra -Werror -std=c89 -pedantic -g -fsanitize=address")
+	else()
+		target_compile_options(gnl PRIVATE "-Wall -Wextra -Werror -std=c89 -pedantic")
+	endif()
+endif()
+
 target_link_libraries(printf PRIVATE
-ft)
+ft
+)
