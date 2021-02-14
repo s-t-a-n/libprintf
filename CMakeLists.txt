@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.18)
+project(printf)
 
 # source: https://cliutils.gitlab.io/modern-cmake/chapters/projects/submodule.html
 find_package(Git QUIET)
@@ -20,7 +21,6 @@ endif()
 #    message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
 #endif()
 
-project(printf)
 add_library(printf STATIC
 src/ft_printf.c
 src/ft_dprintf.c
