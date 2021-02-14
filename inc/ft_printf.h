@@ -36,6 +36,20 @@ int					ft_dprintf(int fd, const char *format_string, ...);
 ** ft_vdprintf.c
 */
 int					ft_vdprintf(int fd, const char *format_string, va_list args);
+
+/*
+** ft_snprintf.c
+*/
+int					ft_snprintf(char *str, size_t size, const char *format_string, ...);
+
+/*
+** ft_vsnprintf.c
+*/
+int					ft_vsnprintf(char *str, size_t size, const char *format_string, va_list args);
+
+/*
+** ft_v
+*/
 /*
 ** flag directives
 */

@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "assert.h"
+#include "libft.h"
 #include "ft_output.h"
 
 void			ft_printchar(char c, t_output_buffer *obuffer)
@@ -91,6 +93,17 @@ int				ft_finalize_obuffer(t_output_buffer *obuffer)
 
 	total_output = obuffer->output_ctr + obuffer->index;
 	write(obuffer->fd, obuffer->store, obuffer->index);
+	free(obuffer);
+	return (total_output);
+}
+
+int				ft_finalize_obuffer_to_str(t_output_buffer *obuffer, char *buf, size_t buflen)
+{
+	int total_output;
+
+	assert(buflen > 0);
+	total_output = obuffer->output_ctr + obuffer->index;
+	ft_strlcpy(buf, (char *)obuffer->store, (obuffer->index >= buflen) ? buflen - 1 : obuffer->index);
 	free(obuffer);
 	return (total_output);
 }
