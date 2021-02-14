@@ -19,6 +19,7 @@ add_test(NAME ${TEST}
 set (TEST "test-snprintf")
 set (SRC_LIST "src/snprintf.cpp")
 add_executable(${TEST}.bin ${MAIN} ${SRC_LIST})
+set_source_files_properties( ${SRC_LIST} PROPERTIES COMPILE_FLAGS "-g -fsanitize=address -Wno-error")
 target_compile_features(${TEST}.bin PRIVATE cxx_std_14)
 target_link_libraries(${TEST}.bin PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(${TEST}.bin PRIVATE printf ft)
