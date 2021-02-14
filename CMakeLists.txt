@@ -27,10 +27,14 @@ src/option_handlers/ft_handle_size1.c
 src/ft_func_router.c
 )
 target_include_directories(printf
-    PUBLIC
-		inc
-	PRIVATE
-		lib/libft/inc
+PUBLIC
+	inc
+PRIVATE
+	lib/libft/inc
+)
+target_compile_options(printf PRIVATE
+${CMAKE_C_FLAGS}
+-Wall -Wextra -Werror -std=c89 -pedantic
 )
 target_link_libraries(printf PRIVATE
 ft)
