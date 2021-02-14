@@ -12,23 +12,6 @@
 
 #include "ft_printf.h"
 
-t_conv_specs	*ft_initialize_conv_specs(t_output_buffer *obuffer,
-					va_list *args, char **format_string)
-{
-	t_conv_specs *cvs;
-
-	cvs = ft_calloc(sizeof(t_conv_specs), 1);
-	if (cvs)
-	{
-		cvs->precision = -1;
-		cvs->size = def;
-		cvs->args = args;
-		cvs->obuffer = obuffer;
-		cvs->fstring = format_string;
-	}
-	return (cvs);
-}
-
 static t_bool	ft_handle_conv_format(char **format_string,
 					t_output_buffer *obuffer, va_list *args)
 {

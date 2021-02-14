@@ -4,9 +4,10 @@
 # Optionally glob, but only for CMake 3.12 or later:
 file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${printf_SOURCE_DIR}/inc/*.h")
 file(GLOB SRC_LIST CONFIGURE_DEPENDS "${printf_SOURCE_DIR}/src/*.c")
+file(GLOB SRC_SUBROOT_LIST CONFIGURE_DEPENDS "${printf_SOURCE_DIR}/src/*/*.c")
 
 # Make an automatic library - will be static or dynamic based on user setting
-add_library(printf ${SRC_LIST} ${HEADER_LIST})
+add_library(printf ${SRC_LIST} ${SRC_SUBROOT_LIST} ${HEADER_LIST})
 
 # Set the compilation standards
 set_property(TARGET printf PROPERTY C_STANDARD 99)
