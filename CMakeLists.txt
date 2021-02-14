@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.11)
 project(printf)
 add_library(printf STATIC
 src/ft_printf.c
+src/ft_dprintf.c
+src/ft_vdprintf.c
 src/conversion_types/ft_ctype_common_dec.c
 src/conversion_types/ft_ctype_hexadecimal_uppercase_x.c
 src/conversion_types/ft_ctype_signed_dec.c

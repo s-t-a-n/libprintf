@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_printf.c                                        :+:    :+:            */
+/*   ft_dprintf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: sverschu <sverschu@student.codam.n>          +#+                     */
 /*                                                   +#+                      */
@@ -12,13 +12,13 @@
 
 #include "ft_printf.h"
 
-int				ft_printf(const char *format_string, ...)
+int			ft_dprintf(int fd, const char *format_string, ...)
 {
 	va_list args;
 	int rvalue;
 
 	va_start(args, format_string);
-	rvalue = ft_vdprintf(STDOUT, format_string, args);
+	rvalue = ft_vdprintf(fd, format_string, args);
 	va_end(args);
 	return (rvalue);
 }
