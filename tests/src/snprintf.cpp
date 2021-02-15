@@ -46,17 +46,22 @@ TEST_CASE( "random string output", "[snprintf]" ) {
 	char buf_ft[1024];
 	memset(buf, 'A', 1024);
 	memset(buf_ft, 'A', 1024);
-	buf[0] = '\0';
-	buf_ft[0] = '\0';
+	buf[0] = '\0'; buf[1023] = '\0';
+	buf_ft[0] = '\0'; buf_ft[1023] = '\0';
 	char str[1024];
 	srand (time(NULL));
 	for (int i = 0; i < 1024; i++) {
-		str[i] = rand() % 256;
-		snprintf(buf, 1024, "%s", str);
-		ft_snprintf(buf_ft, 1024, "%s", str);
-		printf("%7s", "buf:"); fflush(stdout); ft_memdmp(buf, strlen(str) + 5, STDOUT);
-		printf("%7s", "buf_ft:"); fflush(stdout); ft_memdmp(buf_ft, strlen(str) + 5, STDOUT);
-		REQUIRE(memcmp(buf, buf_ft, 1024) == 0);
+		for (int j = 0; j < 1023; j++) {
+			str[j] = rand() % 127;
+			str[j] = 0;
+		}
+		snprintf(buf, 1023, "%s", str);
+		ft_snprintf(buf_ft, 1023, "%s", str);
+		if (memcmp(buf, buf_ft, 1024) != 0) {
+			printf("%7s", "buf:"); fflush(stdout); ft_memdmp(buf, strlen(str) + 5, STDOUT);
+			printf("%7s", "buf_ft:"); fflush(stdout); ft_memdmp(buf_ft, strlen(str) + 5, STDOUT);
+			REQUIRE(memcmp(buf, buf_ft, 1024) == 0);
+		}
 	}
 }
 
@@ -67,16 +72,19 @@ TEST_CASE( "random string output, output cut short", "[snprintf]" ) {
 	memset(buf_ft, 'A', 64);
 	buf[0] = '\0';
 	buf_ft[0] = '\0';
-	char str[64]; str[63] = 0;
+	char str[64]; str[63] = '\0';
 	srand (time(NULL));
 
 	for (int i = 0; i < 1024; i++) {
-		for (int i = 0; i < 63; i++)
-			str[i] = rand() % 256;
+		for (int j = 0; j < 63; j++) {
+			str[j] = rand() % 256;
+		}
 		snprintf(buf, 32, "%s", str);
 		ft_snprintf(buf_ft, 32, "%s", str);
-		printf("%7s", "buf:"); fflush(stdout); ft_memdmp(buf, 32 + 5, STDOUT);
-		printf("%7s", "buf_ft:"); fflush(stdout); ft_memdmp(buf_ft, 32 + 5, STDOUT);
-		REQUIRE(memcmp(buf, buf_ft, 64) == 0);
+		if (memcmp(buf, buf_ft, 64) != 0) {
+			printf("%7s", "buf:"); fflush(stdout); ft_memdmp(buf, 32 + 5, STDOUT);
+			printf("%7s", "buf_ft:"); fflush(stdout); ft_memdmp(buf_ft, 32 + 5, STDOUT);
+			REQUIRE(memcmp(buf, buf_ft, 64) == 0);
+		}
 	}
 }

@@ -100,11 +100,12 @@ int				ft_finalize_obuffer(t_output_buffer *obuffer)
 int				ft_finalize_obuffer_tostr(t_output_buffer *obuffer, char *buf, size_t buflen)
 {
 	int total_output;
+	const size_t obuffer_end = (obuffer->index >= buflen) ? buflen - 1 : obuffer->index;
 
 	assert(buflen > 0);
 	total_output = obuffer->output_ctr + obuffer->index;
-	ft_memmove(buf, (char *)obuffer->store, (obuffer->index >= buflen) ? buflen - 1 : obuffer->index);
-	buf[(obuffer->index >= buflen) ? buflen - 1 : obuffer->index] = '\0';
+	ft_memmove(buf, (char *)obuffer->store, obuffer_end);
+	buf[obuffer_end] = '\0';
 	free(obuffer);
 	return (total_output);
 }
