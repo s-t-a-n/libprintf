@@ -24,43 +24,45 @@ extern "C" {
 #include "libft.h"
 }
 
+#define BUF_SIZE 1024
+
 TEST_CASE( "basic string output", "[snprintf]" ) {
-	char buf[1024];
-	char buf_ft[1024];
-	memset(buf, 'A', 1024);
-	memset(buf_ft, 'A', 1024);
+	char buf[BUF_SIZE];
+	char buf_ft[BUF_SIZE];
+	memset(buf, 'A', BUF_SIZE);
+	memset(buf_ft, 'A', BUF_SIZE);
 	buf[0] = '\0';
 	buf_ft[0] = '\0';
 	const char *str = "But what about Cynanide Mayonaise he asked?";
-	snprintf(buf, 1024, "%s", str);
-	ft_snprintf(buf_ft, 1024, "%s", str);
+	snprintf(buf, BUF_SIZE, "%s", str);
+	ft_snprintf(buf_ft, BUF_SIZE, "%s", str);
 	printf("%7s", "buf:"); fflush(stdout); ft_memdmp(buf, strlen(str) + 5, STDOUT);
 	printf("%7s", "buf_ft:"); fflush(stdout); ft_memdmp(buf_ft, strlen(str) + 5, STDOUT);
 	printf("%30s: \"%s\"\n", "YOUR OUTPUT(strlen + 20)", buf);
 	printf("%30s: \"%s\"\n", "OUTPUT(strlen + 20)", buf);
-	REQUIRE(memcmp(buf, buf_ft, 1024) == 0);
+	REQUIRE(memcmp(buf, buf_ft, BUF_SIZE) == 0);
 }
 
 TEST_CASE( "random string output", "[snprintf]" ) {
-	char buf[1024];
-	char buf_ft[1024];
-	memset(buf, 'A', 1024);
-	memset(buf_ft, 'A', 1024);
-	buf[0] = '\0'; buf[1023] = '\0';
-	buf_ft[0] = '\0'; buf_ft[1023] = '\0';
-	char str[1024];
+	char buf[BUF_SIZE];
+	char buf_ft[BUF_SIZE];
+	memset(buf, 'A', BUF_SIZE);
+	memset(buf_ft, 'A', BUF_SIZE);
+	buf[0] = '\0'; buf[BUF_SIZE-1] = '\0';
+	buf_ft[0] = '\0'; buf_ft[BUF_SIZE-1] = '\0';
+	char str[BUF_SIZE];
 	srand (time(NULL));
-	for (int i = 0; i < 1024; i++) {
-		for (int j = 0; j < 1023; j++) {
+	for (int i = 0; i < BUF_SIZE; i++) {
+		for (int j = 0; j < BUF_SIZE-1; j++) {
 			str[j] = rand() % 127;
 			str[j] = 0;
 		}
-		snprintf(buf, 1023, "%s", str);
-		ft_snprintf(buf_ft, 1023, "%s", str);
-		if (memcmp(buf, buf_ft, 1024) != 0) {
+		snprintf(buf, BUF_SIZE, "%s", str);
+		ft_snprintf(buf_ft, BUF_SIZE-1, "%s", str);
+		if (memcmp(buf, buf_ft, BUF_SIZE) != 0) {
 			printf("%7s", "buf:"); fflush(stdout); ft_memdmp(buf, strlen(str) + 5, STDOUT);
 			printf("%7s", "buf_ft:"); fflush(stdout); ft_memdmp(buf_ft, strlen(str) + 5, STDOUT);
-			REQUIRE(memcmp(buf, buf_ft, 1024) == 0);
+			REQUIRE(memcmp(buf, buf_ft, BUF_SIZE) == 0);
 		}
 	}
 }
@@ -75,7 +77,7 @@ TEST_CASE( "random string output, output cut short", "[snprintf]" ) {
 	char str[64]; str[63] = '\0';
 	srand (time(NULL));
 
-	for (int i = 0; i < 1024; i++) {
+	for (int i = 0; i < BUF_SIZE; i++) {
 		for (int j = 0; j < 63; j++) {
 			str[j] = rand() % 256;
 		}
